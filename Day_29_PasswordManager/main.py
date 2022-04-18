@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -46,8 +47,13 @@ def save_password():
     write_email = entry_email.get()
     write_password = entry_password.get()
 
-    # create string to output to text file
-    write_output = f"{write_website} | {write_email} | {write_password}"
+    # create string to output to json file
+    json_output = {
+        write_website: {
+            "email": write_email,
+            "password": write_password
+        }
+    }
 
 
 
@@ -63,17 +69,24 @@ def save_password():
 
         if is_ok:
 
-            # open and edit file
-            file = open("data.txt", "a")
-            file.write(write_output + "\n")
-            file.close()
+            try:
+                # open and edit file
+                with open("data.json", "r") as data_file:
+                    data = json.load(data_file)
+                    data.update(json_output)
+            except FileNotFoundError:
+                with open("data.json", "w") as data_file:
+                    json.dump(json_output, data_file, indent=4)
+            else:
+                with open("data.json", "w") as data_file:
+                    json.dump(data, data_file, indent=4)
+            finally:
+                # clear website and password entry after add an account
+                entry_website.delete(0,END)
+                entry_password.delete(0, END)
 
-            # clear website and password entry after add an account
-            entry_website.delete(0,END)
-            entry_password.delete(0, END)
-
-            # put cursor back in website
-            entry_website.focus()
+                # put cursor back in website
+                entry_website.focus()
 
 # ---------------------------- UI SETUP ------------------------------- #
 
