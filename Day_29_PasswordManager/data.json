@@ -10,5 +10,9 @@
     "BBC": {
         "email": "ben@email.co.uk",
         "password": "qb5z(wocQ38)B2"
+    },
+    "test": {
+        "email": "ben@email.co.uk",
+        "password": "MuaEw#b3$8VU73c"
     }
 }

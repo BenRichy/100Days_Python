@@ -4,6 +4,8 @@ import random
 import pyperclip
 import json
 
+fp_proj = "Day_29_PasswordManager/"
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 def generate_password():
@@ -71,14 +73,14 @@ def save_password():
 
             try:
                 # open and edit file
-                with open("data.json", "r") as data_file:
+                with open(fp_proj+"data.json", "r") as data_file:
                     data = json.load(data_file)
                     data.update(json_output)
             except FileNotFoundError:
-                with open("data.json", "w") as data_file:
+                with open(fp_proj+"data.json", "w") as data_file:
                     json.dump(json_output, data_file, indent=4)
             else:
-                with open("data.json", "w") as data_file:
+                with open(fp_proj+"data.json", "w") as data_file:
                     json.dump(data, data_file, indent=4)
             finally:
                 # clear website and password entry after add an account
@@ -87,6 +89,12 @@ def save_password():
 
                 # put cursor back in website
                 entry_website.focus()
+
+
+# ---------------------------- SEARCH WEBSITE ------------------------------- #
+
+def search_website():
+    next
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -99,7 +107,7 @@ window.config(padx=20,pady=20)
 canvas = Canvas(width=200,
                 height=200)
 
-pw_lock_img = PhotoImage(file="logo.png")
+pw_lock_img = PhotoImage(file= fp_proj+"logo.png")
 canvas.create_image(100, 100, image=pw_lock_img)
 canvas.grid(column=1,row=0)
 
@@ -114,8 +122,8 @@ label_password = Label(text = "Password:")
 label_password.grid(column=0,row=3)
 
 #Entries
-entry_website = Entry(width=50)
-entry_website.grid(column=1,row=1,columnspan=2)
+entry_website = Entry(width=30)
+entry_website.grid(column=1,row=1)
 
 entry_email = Entry(width=50)
 entry_email.grid(column=1,row=2,columnspan=2)
@@ -124,6 +132,9 @@ entry_password = Entry(width=30)
 entry_password.grid(column=1,row=3)
 
 #Buttons
+button_search = Button(text="Search", width = 16, command = search_website)
+button_search.grid(column=2,row=1)
+
 button_generate = Button(text="Generate Password", width = 16, command = generate_password)
 button_generate.grid(column=2,row=3)
 
