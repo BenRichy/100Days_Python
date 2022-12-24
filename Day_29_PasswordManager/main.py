@@ -94,7 +94,22 @@ def save_password():
 # ---------------------------- SEARCH WEBSITE ------------------------------- #
 
 def search_website():
-    next
+    # obtain website user wishes to search for
+    check_website = entry_website.get()
+
+    # check if website exists in the json file
+    with open(fp_proj+"data.json") as password_file:
+        password_data = json.load(password_file)
+
+        # if details do exist, return the email and password used
+        if check_website in password_data:
+            email = password_data[check_website]["email"]
+            password = password_data[check_website]["password"]
+            messagebox.askokcancel(title = "Password details", message = f"The details for your {check_website} account are:\n email:{email}\n password:{password}.")
+
+        # if details do not exist, return saying no details found
+        elif check_website not in password_data:
+            messagebox.askokcancel(title = "Password details", message=f"Sorry, there are no current account details for {check_website}")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
