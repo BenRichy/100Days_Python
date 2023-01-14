@@ -19,10 +19,16 @@ canvas.create_text(400, 150, text="Title", font=("Arial",40,"italic"))
 canvas.create_text(800/2,526/2,text="Word", font=("Arial",60,"bold"))
 
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
-canvas.grid(column=1,row=0)
+canvas.grid(column=0,row=0, columnspan=2)
 
 #create buttons for the flashcard to indicate if user knows the answer or not
+img_wrong = PhotoImage(file = MAIN_FILEPATH+"images/wrong.png")
+button_wrong = Button(image=img_wrong, highlightthickness=0)
+button_wrong.grid(column=0,row=1)
 
+img_correct = PhotoImage(file = MAIN_FILEPATH+"images/right.png")
+button_correct = Button(image=img_correct, highlightthickness=0)
+button_correct.grid(column=1,row=1)
 
 
 window.mainloop()
