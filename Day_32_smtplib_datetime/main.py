@@ -3,13 +3,15 @@ import json
 import getpass
 import datetime as dt
 import random
+from birthday_wisher import birthday_wisher
 
 #Set variables
 dir_fp = "Day_32_smtplib_datetime/"
 send_email = True
 BenRichie_User = True
 Account = "GMail_App"
-email_type = "quote"
+email_type = "birthday"
+email_to_send = "ben_richmond@ntlworld.com"
 #0-Monday, 1-Tueday etc.
 weekday_quote = 6
 
@@ -26,6 +28,11 @@ elif email_type == "quote":
         send_message = "Subject:Motivational Quote\n\n"+random.choice(quotes)
     else:
         next
+elif email_type == "birthday":
+    bday_message = birthday_wisher()
+    email_to_send = bday_message[0]
+    send_message = f"Subject:Birthday Message\n\n{bday_message[1]}"
+    next
 
 
 if  send_email:
@@ -46,7 +53,7 @@ if  send_email:
         connection.login(user=my_email, password=my_password)
         connection.sendmail(
             from_addr=my_email,
-            to_addrs="ben.richmond@ntlworld.com",
+            to_addrs=email_to_send,
             msg=send_message)
 else:
     print("No email sent")
